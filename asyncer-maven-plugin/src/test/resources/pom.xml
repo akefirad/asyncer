@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.darylmathison.test</groupId>
+    <artifactId>reminder-maven-plugin-test-reminder</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>reminder-maven-plugin Maven Mojo</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.akefirad</groupId>
+                <artifactId>asyncer-maven-plugin</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+                <configuration>
+                    <type>com.akefirad.asyncer.spring.SpringAsyncer</type>
+                    <paths>
+                        <source>${basedir}/src</source>
+                        <destination>${basedir}/target/generated-test-sources/asyncer</destination>
+                        <includes>
+                            <include>**\*.java</include>
+                        </includes>
+                        <excludes>
+                            <exclude>**\*Test.java</exclude>
+                        </excludes>
+                    </paths>
+                    <parameters>
+                        <patterns.generatedPackageName>#{original.package.name}.async</patterns.generatedPackageName>
+                        <patterns.generatedTypeName>Async#{original.type.name}</patterns.generatedTypeName>
+                        <patterns.generatedMethodName>#{original.method.name}Async</patterns.generatedMethodName>
+                        <spring.beanName>#{original.package.name}.async.Async#{original.type.name}</spring.beanName>
+                        <spring.beanType>org.springframework.stereotype.Service</spring.beanType>
+                        <spring.asyncType>CLASS</spring.asyncType>
+                        <spring.isLazyBean>true</spring.isLazyBean>
+                        <spring.executorName>#{original.type.name}</spring.executorName>
+                    </parameters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
